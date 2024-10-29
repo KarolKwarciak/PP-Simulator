@@ -1,75 +1,54 @@
 ﻿namespace Simulator;
 
-public class Creature
+internal class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
-    private bool _isNameSet = false;
-    private bool _isLevelSet = false;
 
     public string Name
     {
         get => _name;
-        set
+        init
         {
-            if (_isNameSet) return; 
-
-            value = value.Trim();
-
-            if (value.Length < 3)
+            string trimmedName = value?.Trim() ?? "Unknown";
+            if (trimmedName.Length < 3)
             {
-                value = value.PadRight(3, '#');
+                trimmedName = trimmedName.PadRight(3, '#');
             }
-            else if (value.Length > 25)
+            else if (trimmedName.Length > 25)
             {
-                value = value.Substring(0, 25).TrimEnd();
-
-                if (value.Length < 3)
-                {
-                    value = value.PadRight(3, '#');
-                }
+                trimmedName = trimmedName.Substring(0, 25).TrimEnd();
             }
 
-            if (char.IsLower(value[0]))
+            if (trimmedName.Length > 0 && char.IsLower(trimmedName[0]))
             {
-                value = char.ToUpper(value[0]) + value.Substring(1);
+                trimmedName = char.ToUpper(trimmedName[0]) + trimmedName[1..];
             }
 
-            _name = value;
-            _isNameSet = true;
+            _name = trimmedName;
         }
     }
 
     public int Level
     {
         get => _level;
-        set
+        init
         {
-            if (_isLevelSet) return; 
-
-            if (value < 1) value = 1;
-            else if (value > 10) value = 10;
-
-            _level = value;
-            _isLevelSet = true;
+            _level = (value >= 1 && value <= 10) ? value : (value < 1 ? 1 : 10);
         }
     }
 
-    public Creature(string name = "Unknown", int level = 1)
+    public Creature(string name, int level = 1)
     {
         Name = name;
         Level = level;
-        _isLevelSet = false;
     }
 
     public Creature() { }
 
-    public string Info => $"{Name} <{Level}>";
+    public void SayHi() => Console.WriteLine($"Hi, my name is {Name}, my level is {Level}");
 
-    public void SayHi()
-    {
-        Console.WriteLine($"Hi! I'm {Name}, Level {Level}");
-    }
+    public string Info => $"{Name} - {Level}";
 
     public void Upgrade()
     {
@@ -77,5 +56,24 @@ public class Creature
         {
             _level++;
         }
+    }
+
+    public void Go(Direction direction)
+    {
+        Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
+    }
+
+    public void Go(Direction[] directions)
+    {
+        foreach (var direction in directions)
+        {
+            Go(direction);
+        }
+    }
+
+    public void Go(string directions)
+    {
+        var directionArray = DirectionParser.Parse(directions);
+        Go(directionArray);
     }
 }
