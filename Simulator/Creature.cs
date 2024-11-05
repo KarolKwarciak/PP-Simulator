@@ -1,79 +1,37 @@
 ﻿namespace Simulator;
 
-internal class Creature
+public abstract class Creature
 {
-    private string _name = "Unknown";
-    private int _level = 1;
+    private string name = "Unknown";
+    private int level = 1;
 
-    public string Name
-    {
-        get => _name;
-        init
-        {
-            string trimmedName = value?.Trim() ?? "Unknown";
-            if (trimmedName.Length < 3)
-            {
-                trimmedName = trimmedName.PadRight(3, '#');
-            }
-            else if (trimmedName.Length > 25)
-            {
-                trimmedName = trimmedName.Substring(0, 25).TrimEnd();
-            }
-
-            if (trimmedName.Length > 0 && char.IsLower(trimmedName[0]))
-            {
-                trimmedName = char.ToUpper(trimmedName[0]) + trimmedName[1..];
-            }
-
-            _name = trimmedName;
-        }
-    }
-
-    public int Level
-    {
-        get => _level;
-        init
-        {
-            _level = (value >= 1 && value <= 10) ? value : (value < 1 ? 1 : 10);
-        }
-    }
-
-    public Creature(string name, int level = 1)
+    public Creature(string name, int level)
     {
         Name = name;
         Level = level;
     }
 
-    public Creature() { }
-
-    public void SayHi() => Console.WriteLine($"Hi, my name is {Name}, my level is {Level}");
-
-    public string Info => $"{Name} - {Level}";
-
-    public void Upgrade()
+    public string Name
     {
-        if (_level < 10)
+        get => name;
+        init
         {
-            _level++;
+            name = string.IsNullOrEmpty(value) ? "Unknown" : value.Trim();
+            name = name.Length >= 3 ? name : name + new string('#', 3 - name.Length);
+            name = name.Length > 25 ? name[..25] : name;
+            name = char.ToUpper(name[0]) + name[1..];
         }
     }
 
-    public void Go(Direction direction)
+    public int Level
     {
-        Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
+        get => level;
+        init => level = value is < 1 ? 1 : value > 10 ? 10 : value;
     }
 
-    public void Go(Direction[] directions)
-    {
-        foreach (var direction in directions)
-        {
-            Go(direction);
-        }
-    }
+    public abstract void SayHi();
 
-    public void Go(string directions)
-    {
-        var directionArray = DirectionParser.Parse(directions);
-        Go(directionArray);
-    }
+    public abstract int Power { get; }
+
+    public void Upgrade() => level = level < 10 ? level + 1 : level;
 }
