@@ -1,38 +1,42 @@
-﻿namespace Simulator;
-
-public class Orc : Creature
+﻿public class Orc : Creature
 {
+    private int rage;
     private int huntCount = 0;
-    private int _rage;
 
-    public Orc() : base("Unknown", 1)
+    public int Rage
     {
-        _rage = 1; 
+        get => rage;
+        private set => rage = Validator.Limiter(value, 0, 10);
     }
 
-    public Orc(string name, int level = 1, int rage = 1) : base(name, level)
+    public Orc(string name, int level, int rage = 0) : base(name, level)
     {
         Rage = rage;
     }
 
-    public int Rage
-    {
-        get => _rage;
-        private set => _rage = Math.Clamp(value, 0, 10);
-    }
+    public override string Info => $"{Rage}";
 
-    public override void SayHi() => Console.WriteLine($"Hi, I'm {Name}, an orc at level {Level} with rage {Rage}.");
+    public override int Power => 7 * Level + 3 * Rage;
+
+    public override void SayHi()
+    {
+        Console.WriteLine($"Hi, I'm {Name}, an orc at level {Level} with rage {Rage}.");
+    }
 
     public void Hunt()
     {
-        Console.WriteLine($"{Name} is hunting.");
         huntCount++;
-        if (huntCount % 2 == 0 && Rage < 10)
+        Console.WriteLine($"{Name} is hunting.");
+
+        if (huntCount % 2 == 0)
         {
             Rage++;
-            Console.WriteLine($"{Name}'s rage increased to {Rage}!");
+            Console.WriteLine($"Rage increased to {Rage}.");
         }
     }
 
-    public override int Power => 7 * Level + 3 * Rage;
+    public override string ToString() // Add this method
+    {
+        return $"ORC: {Name} [{Level}][{Rage}]"; // Adjust to desired format
+    }
 }

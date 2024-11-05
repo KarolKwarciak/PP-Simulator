@@ -1,38 +1,44 @@
-﻿namespace Simulator;
-
-public class Elf : Creature
+﻿public class Elf : Creature
 {
-    private int agilityCount = 0;
-    private int _agility;
+    private int agility;
 
-    public Elf() : base("Unknown", 1)
-    {
-        _agility = 1; 
-    }
+    public Elf() : this("Unknown", 1, 0) { }
 
-    public Elf(string name, int level = 1, int agility = 1) : base(name, level)
+    public Elf(string name, int level, int agility)
+        : base(name, level)
     {
         Agility = agility;
     }
 
     public int Agility
     {
-        get => _agility;
-        private set => _agility = Math.Clamp(value, 0, 10);
+        get { return agility; }
+        private set { agility = Validator.Limiter(value, 0, 10); }
     }
 
-    public override void SayHi() => Console.WriteLine($"Hi, I'm {Name}, an elf at level {Level} with agility {Agility}.");
+    public override string Info => $"E## [{Agility}]";
+
+    public override int Power => 8 * Level + 2 * Agility;
+
+    public override void SayHi()
+    {
+        Console.WriteLine($"Hi, I'm {Name}, an elf at level {Level} with agility {Agility}.");
+    }
 
     public void Sing()
     {
         Console.WriteLine($"{Name} is singing.");
-        agilityCount++;
-        if (agilityCount % 3 == 0 && Agility < 10)
+        if (++singCount % 3 == 0)
         {
             Agility++;
-            Console.WriteLine($"{Name}'s agility increased to {Agility}!");
+            Console.WriteLine($"{Name}'s agility increased to {Agility}.");
         }
     }
 
-    public override int Power => 8 * Level + 2 * Agility;
+    private int singCount = 0;
+
+    public override string ToString() // Add this method
+    {
+        return $"ELF: {Name} [{Level}][{Agility}]"; // Adjust to desired format
+    }
 }
