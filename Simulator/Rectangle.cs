@@ -17,7 +17,8 @@ namespace Simulator
             var right_top_y = y2 > y1 ? y2 : y1;
             if (left_bottom_x == right_top_x || left_bottom_y == right_top_y)
             {
-                throw new ArgumentException("Invalid coordinates");
+                throw new ArgumentException("Invalid rectangle, points are collinear!");
+
             }
             X1 = left_bottom_x;
             Y1 = left_bottom_y;
