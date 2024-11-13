@@ -20,18 +20,16 @@
 
     public override int Power => 8 * Level + 2 * Agility;
 
-    public override void SayHi()
+    public override string Greeting()
     {
         Console.WriteLine($"Hi, I'm {Name}, an elf at level {Level} with agility {Agility}.");
     }
 
     public void Sing()
     {
-        Console.WriteLine($"{Name} is singing.");
         if (++singCount % 3 == 0)
         {
             Agility++;
-            Console.WriteLine($"{Name}'s agility increased to {Agility}.");
         }
     }
 

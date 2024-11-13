@@ -18,7 +18,7 @@
 
     public override int Power => 7 * Level + 3 * Rage;
 
-    public override void SayHi()
+    public override string Greeting()
     {
         Console.WriteLine($"Hi, I'm {Name}, an orc at level {Level} with rage {Rage}.");
     }
@@ -26,17 +26,15 @@
     public void Hunt()
     {
         huntCount++;
-        Console.WriteLine($"{Name} is hunting.");
 
         if (huntCount % 2 == 0)
         {
             Rage++;
-            Console.WriteLine($"Rage increased to {Rage}.");
         }
     }
 
-    public override string ToString() // Add this method
+    public override string ToString() 
     {
-        return $"ORC: {Name} [{Level}][{Rage}]"; // Adjust to desired format
+        return $"ORC: {Name} [{Level}][{Rage}]"; 
     }
 }
