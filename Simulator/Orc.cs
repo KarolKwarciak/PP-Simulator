@@ -1,4 +1,8 @@
-﻿public class Orc : Creature
+﻿using Simulator;
+using System.Reflection.Emit;
+using System.Xml.Linq;
+
+public class Orc : Creature
 {
     private int rage;
     private int huntCount = 0;
@@ -17,7 +21,6 @@
     public override string Info => $"{Rage}";
 
     public override int Power => 7 * Level + 3 * Rage;
-
     public override string Greeting()
     {
         Console.WriteLine($"Hi, I'm {Name}, an orc at level {Level} with rage {Rage}.");
@@ -33,8 +36,8 @@
         }
     }
 
-    public override string ToString() 
+    public override string ToString()
     {
-        return $"ORC: {Name} [{Level}][{Rage}]"; 
+        return $"ORC: {Name} [{Level}][{Rage}]";
     }
 }

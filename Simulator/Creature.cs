@@ -10,6 +10,7 @@ public abstract class Creature
         get => name;
         init => name = Validator.Shortener(value, 3, 25, '#');
     }
+
     public abstract int Power
     {
         get;
@@ -23,6 +24,7 @@ public abstract class Creature
     }
 
     public abstract string Info { get; }
+
     public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
 
     public Creature(string name, int level = 1)
@@ -39,7 +41,9 @@ public abstract class Creature
     {
         if (level < 10) { level++; }
     }
+
     string Go(Direction direction) => $"{direction.ToString().ToLower()}";
+
     public string[] Go(Direction[] directions)
     {
         var result = new string[directions.Length];
@@ -49,8 +53,7 @@ public abstract class Creature
         }
         return result;
     }
+
     public string[] Go(string directionSeq) =>
         Go(DirectionParser.Parse(directionSeq));
-
-    
 }

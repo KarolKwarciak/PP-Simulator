@@ -11,54 +11,55 @@ namespace Simulator
             Lab5b();
         }
 
-        static void Lab4a()
-        {
-            Console.WriteLine("HUNT TEST\n");
-            var orc = new Orc("Gorbag", 1, 7);
-            orc.SayHi();
-            for (int i = 0; i < 10; i++)
-            {
-                orc.Hunt();
-                orc.SayHi();
-            }
+        //static void Lab4a()
+        //{
+        //    Console.WriteLine("HUNT TEST\n");
+        //    var orc = new Orc("Gorbag", 1, 7);
+        //    orc.SayHi();
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        orc.Hunt();
+        //        orc.SayHi();
+        //    }
 
-            Console.WriteLine("\nSING TEST\n");
-            var elf = new Elf("Legolas", 1, 2);
-            elf.SayHi();
-            for (int i = 0; i < 10; i++)
-            {
-                elf.Sing();
-                elf.SayHi();
-            }
+        //    Console.WriteLine("\nSING TEST\n");
+        //    var elf = new Elf("Legolas", 1, 2);
+        //    elf.SayHi();
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        elf.Sing();
+        //        elf.SayHi();
+        //    }
 
-            Console.WriteLine("\nPOWER TEST\n");
-            Creature[] creatures = {
-                orc,
-                elf,
-                new Orc("Morgash", 3, 8),
-                new Elf("Elandor", 5, 3)
-            };
-            foreach (Creature creature in creatures)
-            {
-                Console.WriteLine($"{creature.Name,-15}: {creature.Power}");
-            }
-        }
+        //    Console.WriteLine("\nPOWER TEST\n");
+        //    Creature[] creatures = {
+        //        orc,
+        //        elf,
+        //        new Orc("Morgash", 3, 8),
+        //        new Elf("Elandor", 5, 3)
+        //    };
+        //    foreach (Creature creature in creatures)
+        //    {
+        //        Console.WriteLine($"{creature.Name,-15}: {creature.Power}");
+        //    }
+        //}
 
-        static void Lab4b()
-        {
-            object[] myObjects = {
-                new Animals() { Description = "dogs", Size = 3 },
-                new Birds() { Description = "eagles", Size = 10 },
-                new Elf("Elandor", 10, 0),
-                new Orc("Morgash", 6, 4)
-            };
+        //static void Lab4b()
+        //{
+        //    object[] myObjects = {
+        //        new Animals() { Description = "dogs", Size = 3 },
+        //        new Birds() { Description = "eagles", Size = 10 },
+        //        new Elf("Elandor", 10, 0),
+        //        new Orc("Morgash", 6, 4)
+        //    };
 
-            Console.WriteLine("\nMy objects:");
-            foreach (var o in myObjects)
-            {
-                Console.WriteLine(o);
-            }
-        }
+        //    Console.WriteLine("\nMy objects:");
+        //    foreach (var o in myObjects)
+        //    {
+        //        Console.WriteLine(o);
+        //    }
+        //}
+
         static void Lab5a()
         {
             try
@@ -95,6 +96,7 @@ namespace Simulator
                 Console.WriteLine($"{expectation.Message}");
             }
         }
+
         public static void Lab5b()
         {
             try
@@ -128,7 +130,6 @@ namespace Simulator
             Console.WriteLine($"Point {pointOutside2} inside map: {map10.Exist(pointOutside2)}");
             Console.Write("\n");
 
-
             Point startPoint = new Point(5, 5);
             Console.WriteLine($"Starting point: {startPoint}");
             Console.WriteLine($"Next point after up move {startPoint}: {map10.Next(startPoint, Direction.Up)}");
@@ -136,7 +137,6 @@ namespace Simulator
             Console.WriteLine($"Next point afrer left move {startPoint}: {map10.Next(startPoint, Direction.Left)}");
             Console.WriteLine($"Next point afrer right move {startPoint}: {map10.Next(startPoint, Direction.Right)}");
             Console.Write("\n");
-
 
             Point edgePoint = new Point(0, 0);
             Console.WriteLine($"Trying to move out of a map {edgePoint}: ");
@@ -147,7 +147,6 @@ namespace Simulator
             Console.WriteLine($"Trying to move out of a map after right move: {edgePoint2}");
             Console.WriteLine($"After move right {map20.Next(edgePoint2, Direction.Right)}");
             Console.Write("\n");
-
 
             Console.WriteLine($"Next diagonal point after right-up from {startPoint}: {map10.NextDiagonal(startPoint, Direction.Up)}");
             Console.WriteLine($"Next diagonal point after right-down from {startPoint}: {map10.NextDiagonal(startPoint, Direction.Right)}");

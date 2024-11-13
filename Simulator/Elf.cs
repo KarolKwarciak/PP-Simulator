@@ -1,4 +1,8 @@
-﻿public class Elf : Creature
+﻿using Simulator;
+using System.Reflection.Emit;
+using System.Xml.Linq;
+
+public class Elf : Creature
 {
     private int agility;
 
@@ -9,7 +13,7 @@
     {
         Agility = agility;
     }
-
+    private int singCount = 0;
     public int Agility
     {
         get { return agility; }
@@ -20,10 +24,6 @@
 
     public override int Power => 8 * Level + 2 * Agility;
 
-    public override string Greeting()
-    {
-        Console.WriteLine($"Hi, I'm {Name}, an elf at level {Level} with agility {Agility}.");
-    }
 
     public void Sing()
     {
@@ -33,10 +33,5 @@
         }
     }
 
-    private int singCount = 0;
-
-    public override string ToString() // Add this method
-    {
-        return $"ELF: {Name} [{Level}][{Agility}]"; // Adjust to desired format
-    }
-}
+    public override string Greeting() => $"Hi, I'm {Name}, an elf at level {Level} with agility {Agility}.";
+}  
