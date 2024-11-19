@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Linq;
+using System.Numerics;
 
 namespace Simulator;
 
@@ -9,13 +10,8 @@ public abstract class Creature
     {
         get => name;
         init => name = Validator.Shortener(value, 3, 25, '#');
-    }
 
-    public abstract int Power
-    {
-        get;
     }
-
     private int level = 1;
     public int Level
     {
@@ -23,9 +19,13 @@ public abstract class Creature
         init => level = Validator.Limiter(value, 1, 10);
     }
 
+    public abstract int Power { get; }
+
     public abstract string Info { get; }
 
     public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
+
+
 
     public Creature(string name, int level = 1)
     {
@@ -35,25 +35,28 @@ public abstract class Creature
 
     public Creature() { }
 
-    public abstract void SayHi();
+
+    public abstract string Greeting();
 
     public void Upgrade()
     {
-        if (level < 10) { level++; }
+        if (level < 10)
+        {
+            level++;
+        }
     }
 
-    string Go(Direction direction) => $"{direction.ToString().ToLower()}";
-
+    public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
     public string[] Go(Direction[] directions)
     {
-        var result = new string[directions.Length];
+        var output = new string[directions.Length];
         for (int i = 0; i < directions.Length; i++)
         {
-            result[i] = Go(directions[i]);
+            output[i] = Go(directions[i]);
         }
-        return result;
+        return output;
     }
 
-    public string[] Go(string directionSeq) =>
-        Go(DirectionParser.Parse(directionSeq));
+    public string[] Go(string letters) => Go(DirectionParser.Parse(letters));
+
 }
