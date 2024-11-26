@@ -7,8 +7,8 @@ namespace Simulator
     {
         static void Main(string[] args)
         {
-            Lab5a();
-            Lab5b();
+            //Lab5a();
+            //Lab5b();
         }
 
         //static void Lab4a()

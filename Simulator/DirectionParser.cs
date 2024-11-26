@@ -1,30 +1,32 @@
-﻿namespace Simulator;
+﻿using System.Diagnostics.Metrics;
+
+namespace Simulator;
 
 public static class DirectionParser
 {
     public static Direction[] Parse(string input)
     {
-        var directionsList = new List<Direction>();
+        List<Direction> directions = new();
 
-        foreach (char c in input.ToUpper())
-        {
-            switch (c)
+            foreach (char dir in input.ToUpper())
             {
-                case 'U':
-                    directionsList.Add(Direction.Up);
-                    break;
-                case 'R':
-                    directionsList.Add(Direction.Right);
-                    break;
-                case 'D':
-                    directionsList.Add(Direction.Down);
-                    break;
-                case 'L':
-                    directionsList.Add(Direction.Left);
-                    break;
+                switch (dir)
+                {
+               
+                    case 'U':
+                        directions.Add(Direction.Up);
+                        break;
+                    case 'D':
+                        directions.Add(Direction.Down);
+                        break;
+                    case 'L':
+                        directions.Add(Direction.Left);
+                        break;
+                    case 'R':
+                        directions.Add(Direction.Right);
+                        break;
+                }
             }
-        }
-
-        return directionsList.ToArray();
+        return directions.ToArray();
     }
 }
