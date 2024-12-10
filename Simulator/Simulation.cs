@@ -72,6 +72,8 @@ public class Simulation
         get => ParsedMoves[_counter % ParsedMoves.Count].ToString().ToLower();
     }
 
+
+    public SimulationHistory History { get; }
     /// <summary>
     /// Simulation constructor.
     /// Throw errors:
@@ -96,12 +98,20 @@ public class Simulation
         Positions = positions;
         Moves = moves;
         ParsedMoves = ValidateMoves(moves);
+        History = new SimulationHistory();
 
 
         for (int i = 0; i < mappables.Count; i++)
         {
             mappables[i].MapAndPosition(map, positions[i]);
         }
+
+        History.SaveState(
+           _counter,
+           Mappables.ToDictionary(m => m, m => m.Position),
+           null,
+           null
+       );
     }
 
     /// <summary>
@@ -115,6 +125,13 @@ public class Simulation
 
         var direction = ParsedMoves[_counter % ParsedMoves.Count];
         CurrentMappable.Go(direction);
+
+        History.SaveState(
+           _counter,
+           Mappables.ToDictionary(m => m, m => m.Position),
+           CurrentMappable,
+           direction
+       );
 
         _counter++;
         if (_counter >= Moves.Length) Finished = true;
