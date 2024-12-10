@@ -111,7 +111,7 @@ public class Simulation
     public void Turn()
     {
         if (Finished)
-            throw new InvalidOperationException("Simulation is already finished.");
+            throw new InvalidOperationException("Simulation is finished.");
 
         var direction = ParsedMoves[_counter % ParsedMoves.Count];
         CurrentMappable.Go(direction);

@@ -26,7 +26,7 @@ public class Animals : IMappable
 
     public virtual void Go(Direction direction)
     {
-        if (Map == null) throw new InvalidOperationException("Animal cannot move since they are not on the map!");
+        if (Map == null) throw new InvalidOperationException("Animal cannot move because they are not on the map!");
 
         var newPosition = GetNewPosition(direction);
 
@@ -37,7 +37,7 @@ public class Animals : IMappable
     public virtual void MapAndPosition(Map map, Point point)
     {
         if (map == null) throw new ArgumentNullException(nameof(map));
-        if (Map != null) throw new InvalidOperationException("This animal is already on a map.");
+        if (Map != null) throw new InvalidOperationException("This animal is on a map.");
         if (!map.Exist(point)) throw new ArgumentException("This position does not exist on this map.");
 
         Map = map;

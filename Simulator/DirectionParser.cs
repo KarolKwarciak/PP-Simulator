@@ -29,4 +29,15 @@ public static class DirectionParser
             }
         return directions.ToArray();
     }
+    public static Direction Reverse(Direction direction)
+    {
+        return direction switch
+        {
+            Direction.Up => Direction.Down,
+            Direction.Left => Direction.Right,
+            Direction.Down => Direction.Up,
+            Direction.Right => Direction.Left,
+            _ => throw new ArgumentException("Wrong direction")
+        };
+    }
 }
