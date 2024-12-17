@@ -1,18 +1,16 @@
 ﻿using Simulator.Maps;
 using Simulator;
 using System.Text;
-
 namespace SimConsole;
-
 internal class Program
 {
     static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
-
-        BigBounceMap map = new BigBounceMap(8, 6);
-
-        List<IMappable> creatures2 = new()
+        SmallSquareMap squareMap = new(5);
+        SmallTorusMap torusMap = new(8, 6);
+        BigBounceMap bounceMap = new(8, 6);
+        List<IMappable> creatures = new()
         {
             new Elf("Elandor"),
             new Orc("Gorbag"),
@@ -20,8 +18,7 @@ internal class Program
             new Birds { Description = "Eagles", Size = 2, CanFly = true },
             new Birds { Description = "Ostriches", Size = 2, CanFly = false }
         };
-
-        List<Point> points2 = new()
+        List<Point> points = new()
         {
             new Point(1, 1),
             new Point(2, 3),
@@ -29,42 +26,21 @@ internal class Program
             new Point(4, 4),
             new Point(0, 0)
         };
+        string moves = "udlrduuuulllllllllll";
+        Simulation simulation = new Simulation(bounceMap, creatures, points, moves);
 
-        string moves = "rduurlullududduuduld";
+        SimulationHistory simulationHistory = new(simulation);
 
-
-
-
-        Simulation simulation = new Simulation(map, creatures2, points2, moves);
-        MapVisualizer mapVisualizer = new MapVisualizer(map);
-
-
-        Console.WriteLine("SIMULATION!");
-        Console.WriteLine();
-        Console.WriteLine("Starting positions:");
-
-        mapVisualizer.Draw();
-        var turn = 1;
-
-        while (!simulation.Finished)
+        for (int i = 0; i < simulation.Moves.Length; i++)
         {
-            ConsoleKeyInfo key = Console.ReadKey(intercept: true);
-            Console.WriteLine($"Turn {turn}");
-            Console.WriteLine($"{simulation.CurrentMappable} moves {simulation.CurrentMoveName}");
-
-            if (key.Key == ConsoleKey.Spacebar)
+            Console.WriteLine($"Turn: {i + 1}\n");
+            Console.WriteLine(simulationHistory.TurnLogs[i].Mappable);
+            Console.WriteLine(simulationHistory.TurnLogs[i].Move);
+            foreach (KeyValuePair<Point, char> kvp in simulationHistory.TurnLogs[i].Symbols)
             {
-                simulation.Turn();
-                mapVisualizer.Draw();
-                turn++;
-
-
+                Console.WriteLine($"Postition: {kvp.Key}, Symbol: {kvp.Value}");
             }
+            Console.WriteLine("\n");
         }
-        simulation.History.ShowState(5);
-        simulation.History.ShowState(10);
-        simulation.History.ShowState(15);
-        simulation.History.ShowState(20);
-
     }
 }
