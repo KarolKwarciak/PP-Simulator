@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebApplication2.Pages
+public class PrivacyModel : PageModel
 {
-    public class PrivacyModel : PageModel
+    public int Counter { get; private set; }
+    public void OnGet()
     {
-
-        public void OnGet()
-        {
-        }
+        Counter = HttpContext.Session.GetInt32("Counter") ?? 1;
     }
-
+    public void OnPost()
+    {
+        Counter = HttpContext.Session.GetInt32("Counter") ?? 1;
+        Counter++;
+        HttpContext.Session.SetInt32("Counter", Counter);
+    }
 }

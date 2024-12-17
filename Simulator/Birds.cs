@@ -10,8 +10,14 @@ namespace Simulator;
 public class Birds : Animals
 {
     private Direction _currentDirection;
-    public override char Symbol => CanFly ? 'B' : 'b';
-    public bool CanFly { get; set; } = true;
+    public override char Symbol => CanFly ? 'B' : 'N';
+    private bool canFly = true;
+    public bool CanFly
+    {
+        get => canFly;
+        init => canFly = value;
+    }
+
 
     public override string Info
     {
